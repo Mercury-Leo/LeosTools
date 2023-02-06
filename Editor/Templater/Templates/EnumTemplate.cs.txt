@@ -1,6 +1,6 @@
 namespace #NAMESPACE# {
 
-	public enum #SCRIPTNAME# {
+	public enum #SCRIPTNAME#() {
 	    #NOTRIM#
     }
 	

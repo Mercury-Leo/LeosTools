@@ -3,15 +3,17 @@
   "version": "1.0.0",
   "displayName": "Leo's Tools",
   "description": "This package holds tools for:\n1. Folder generation.\n2. Script Templates \n3. Scene Selection \n4. EnhancedLogger",
- "keywords": [
+  "keywords": [
     "Folder",
     "Templates",
     "Scenes",
-    "Logger"
+    "Logger",
+    "Utility"
   ],
   "author": {
     "name": "Mercury Finnegan",
     "email": "Kansamas@gmail.com",
     "url": "https://mercury-leo.github.io/"
-  }
+  },
+  "unity": "2019.1"
 }
