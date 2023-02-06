@@ -2,7 +2,7 @@
   "name": "com.leosclockworks.tools",
   "version": "1.0.0",
   "displayName": "Leo's Tools",
-  "description": "This package holds tools for:\n1. Folder generation.\n2. Script Templates \n3. Scene Selection \n.4 EnhancedLogger",
+  "description": "This package holds tools for:\n1. Folder generation.\n2. Script Templates \n3. Scene Selection \n4. EnhancedLogger",
  "keywords": [
     "Folder",
     "Templates",
