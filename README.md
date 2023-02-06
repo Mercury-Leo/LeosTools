@@ -21,11 +21,16 @@ As I tend to create quite a lot of folders while designing, this saves me a few 
 The tool also comes with a menu option to create a base project folder setup.
 Under Tools -> SetUp -> Create Base Project
 This will create a folder structure in the assets folder like so:
-`_Project
+
+_Project
+
 ---- AppUI
+
 ---- Core
+
 ---- Game
----- Scenes`
+
+---- Scenes
 
 ### Scene Selection
 The Scene selection tool is baed on the talented Warped Imganiation's video on the subject.
