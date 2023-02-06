@@ -1,4 +1,3 @@
-# LeosTools
 # Leo's tools
 
 This package contains Editor scripts that enhances development flow, for me at least.
