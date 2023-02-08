@@ -17,7 +17,7 @@ namespace Editor.SceneSelection {
             GUILayout.Space(20f);
 
             var enabled = SceneSelectionOverlaySettings.instance.AdditiveOptionEnabled;
-            var value = EditorGUILayout.Toggle("Additive Option", enabled, GUILayout.Width(200f));
+            var value = EditorGUILayout.Toggle(AdditiveOption, enabled, GUILayout.Width(200f));
 
             if (enabled != value)
                 SceneSelectionOverlaySettings.instance.AdditiveOptionEnabled = value;
