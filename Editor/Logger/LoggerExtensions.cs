@@ -40,7 +40,7 @@ namespace Editor.Logger {
         }
 
         public static string GetLogFormat(LogType prefix, Object obj, params object[] message) {
-            string formatMessage;
+            string formatMessage = null;
 #if UNITY_EDITOR
 
             var format = Builder.Append(prefix.GetLogTypeColor()).Append(Space);
