@@ -14,7 +14,7 @@ namespace Editor.FileUtils {
 
         const string ScriptsFolder = "Scripts";
         const string PrefabsFolder = "Prefabs";
-        const string InterfacesFolder = "Interfaces";
+        const string InterfacesFolder = "Abstractions";
         const string ScriptableFolder = "ScriptableObjects";
         const string BaseProject = "_Project";
         static readonly string[] BaseFolders = { "AppUI", "Core", "Game", "Scenes" };
