@@ -8,7 +8,6 @@ using UnityEditor.Toolbars;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-#if UNITY_EDITOR
 namespace Tools.Editor.SceneSelection
 {
     [Overlay(typeof(SceneView), "Scene Selection")]
@@ -119,4 +118,3 @@ namespace Tools.Editor.SceneSelection
         }
     }
 }
-#endif

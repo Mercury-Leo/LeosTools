@@ -1,4 +1,3 @@
-#if UNITY_EDITOR
 namespace Tools.Editor.SceneSelection
 {
     internal static class SceneSelectionConfig
@@ -8,4 +7,3 @@ namespace Tools.Editor.SceneSelection
         public const string AdditiveOption = "Additive Option";
     }
 }
-#endif

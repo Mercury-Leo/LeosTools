@@ -1,7 +1,6 @@
 using UnityEditor;
 using UnityEngine;
 
-#if UNITY_EDITOR
 namespace Tools.Editor.SceneSelection
 {
     using static SceneSelectionConfig;
@@ -22,4 +21,3 @@ namespace Tools.Editor.SceneSelection
         }
     }
 }
-#endif

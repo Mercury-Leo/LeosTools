@@ -2,56 +2,79 @@ using System.IO;
 using Tools.Editor.Template;
 using UnityEditor;
 
-#if UNITY_EDITOR
-
-namespace Editor.Templater {
+namespace Editor.Templater
+{
     using static TemplateConfig;
 
-
-    internal static class TemplateCreator {
+    internal static class TemplateCreator
+    {
         [MenuItem(InterfaceItem, priority = 40)]
-        public static void CreateInterfaceMenuItem() {
-            if (GuardTemplateExists(InterfaceTemplate))
+        public static void CreateInterfaceMenuItem()
+        {
+            var path = GetTemplatePath(InterfaceTemplate);
+            if (GuardTemplateExists(path))
                 return;
 
-            ProjectWindowUtil.CreateScriptAssetFromTemplateFile(InterfaceTemplate, InterfaceClass);
+            ProjectWindowUtil.CreateScriptAssetFromTemplateFile(path, InterfaceClass);
         }
 
         [MenuItem(ScriptableObjectItem, priority = 40)]
-        public static void CreateScriptableObjectMenuItem() {
-            if (GuardTemplateExists(ScriptableObjectTemplate))
+        public static void CreateScriptableObjectMenuItem()
+        {
+            var path = GetTemplatePath(ScriptableObjectTemplate);
+            if (GuardTemplateExists(path))
                 return;
 
-            ProjectWindowUtil.CreateScriptAssetFromTemplateFile(ScriptableObjectTemplate, ScriptableObjectClass);
+            ProjectWindowUtil.CreateScriptAssetFromTemplateFile(path, ScriptableObjectClass);
         }
 
         [MenuItem(ClassItem, priority = 40)]
-        public static void CreateClassMenuItem() {
-            if (GuardTemplateExists(ClassTemplate))
+        public static void CreateClassMenuItem()
+        {
+            var path = GetTemplatePath(ClassTemplate);
+            if (GuardTemplateExists(path))
                 return;
 
-            ProjectWindowUtil.CreateScriptAssetFromTemplateFile(ClassTemplate, PureClass);
+            ProjectWindowUtil.CreateScriptAssetFromTemplateFile(path, PureClass);
         }
 
         [MenuItem(StaticClassItem, priority = 40)]
-        public static void CreateStaticClassMenuItem() {
-            if (GuardTemplateExists(StaticClassTemplate))
+        public static void CreateStaticClassMenuItem()
+        {
+            var path = GetTemplatePath(StaticClassTemplate);
+            if (GuardTemplateExists(path))
                 return;
 
-            ProjectWindowUtil.CreateScriptAssetFromTemplateFile(StaticClassTemplate, StaticClassClass);
+            ProjectWindowUtil.CreateScriptAssetFromTemplateFile(path, StaticClassClass);
         }
 
         [MenuItem(EnumItem, priority = 40)]
-        public static void CreateEnumMenuItem() {
-            if (GuardTemplateExists(EnumTemplate))
+        public static void CreateEnumMenuItem()
+        {
+            var path = GetTemplatePath(EnumTemplate);
+            if (GuardTemplateExists(path))
                 return;
 
-            ProjectWindowUtil.CreateScriptAssetFromTemplateFile(EnumTemplate, EnumClass);
+            ProjectWindowUtil.CreateScriptAssetFromTemplateFile(path, EnumClass);
         }
 
-        static bool GuardTemplateExists(string path) {
+        private static bool GuardTemplateExists(string path)
+        {
             return !File.Exists(path);
+        }
+
+        private static string GetTemplatePath(string templateName)
+        {
+            var scriptGuids = AssetDatabase.FindAssets(Path.GetFileNameWithoutExtension(nameof(TemplateCreator)));
+
+            if (scriptGuids.Length == 0)
+            {
+                return string.Empty;
+            }
+
+            var path = AssetDatabase.GUIDToAssetPath(scriptGuids[0]);
+            var directory = Path.GetDirectoryName(path);
+            return Path.Combine(directory, templateName);
         }
     }
 }
-#endif
