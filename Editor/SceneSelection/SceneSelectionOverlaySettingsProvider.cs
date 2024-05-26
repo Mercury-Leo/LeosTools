@@ -4,14 +4,17 @@ using UnityEngine;
 
 #if UNITY_EDITOR
 
-namespace Editor.SceneSelection {
+namespace Tools.Editor.SceneSelection
+{
     using static SceneSelectionConfig;
 
-    internal sealed class SceneSelectionOverlaySettingsProvider : SettingsProvider {
-        SceneSelectionOverlaySettingsProvider(string path, SettingsScope scopes,
+    internal sealed class SceneSelectionOverlaySettingsProvider : SettingsProvider
+    {
+        private SceneSelectionOverlaySettingsProvider(string path, SettingsScope scopes,
             IEnumerable<string> keywords = null) : base(path, scopes, keywords) { }
 
-        public override void OnGUI(string searchContext) {
+        public override void OnGUI(string searchContext)
+        {
             base.OnGUI(searchContext);
 
             GUILayout.Space(20f);
@@ -24,7 +27,8 @@ namespace Editor.SceneSelection {
         }
 
         [SettingsProvider]
-        public static SettingsProvider CreateSettingsProvider() {
+        public static SettingsProvider CreateSettingsProvider()
+        {
             return new SceneSelectionOverlaySettingsProvider(SelectionOverlayPath, SettingsScope.Project);
         }
     }

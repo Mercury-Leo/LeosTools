@@ -1,4 +1,5 @@
 using System.IO;
+using Tools.Editor.Template;
 using UnityEditor;
 
 #if UNITY_EDITOR

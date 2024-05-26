@@ -3,33 +3,38 @@ using System.Text;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
-namespace Editor.Logger {
-    public static class LoggerExtensions {
-        const string LogColor = "gray";
-        const string WarningColor = "yellow";
-        const string ErrorColor = "red";
-        const string AssertColor = "green";
-        const string ExceptionColor = "orange";
-        const string ObjectColor = "lightblue";
+namespace Tools.Editor.Logger
+{
+    public static class LoggerExtensions
+    {
+        private const string LogColor = "gray";
+        private const string WarningColor = "yellow";
+        private const string ErrorColor = "red";
+        private const string AssertColor = "green";
+        private const string ExceptionColor = "orange";
+        private const string ObjectColor = "lightblue";
 
-        const string ColorStart = "<color=";
-        const string ColorEnd = "</color>";
-        const string ColorMiddle = ">";
-        const string Colon = ":";
-        const string Divider = ";\n";
-        const string Space = " ";
+        private const string ColorStart = "<color=";
+        private const string ColorEnd = "</color>";
+        private const string ColorMiddle = ">";
+        private const string Colon = ":";
+        private const string Divider = ";\n";
+        private const string Space = " ";
 
-        static readonly StringBuilder Builder = new();
+        private static readonly StringBuilder Builder = new();
 
-        static string GetColor(this string str, string color) {
+        private static string GetColor(this string str, string color)
+        {
             var message = Builder.Append(ColorStart).Append(color).Append(ColorMiddle).Append(str).Append(ColorEnd)
                 .ToString();
             Builder.Clear();
             return message;
         }
 
-        static string GetLogTypeColor(this LogType logType) {
-            return logType switch {
+        private static string GetLogTypeColor(this LogType logType)
+        {
+            return logType switch
+            {
                 LogType.Log => logType.ToString().GetColor(LogColor),
                 LogType.Warning => logType.ToString().GetColor(WarningColor),
                 LogType.Error => logType.ToString().GetColor(ErrorColor),
@@ -39,7 +44,8 @@ namespace Editor.Logger {
             };
         }
 
-        public static string GetLogFormat(LogType prefix, Object obj, params object[] message) {
+        public static string GetLogFormat(LogType prefix, Object obj, params object[] message)
+        {
             string formatMessage = null;
 #if UNITY_EDITOR
 

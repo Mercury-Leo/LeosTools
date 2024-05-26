@@ -1,37 +1,40 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using UnityEditor;
+using UnityEditor.Overlays;
+using UnityEditor.SceneManagement;
+using UnityEditor.Toolbars;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 #if UNITY_EDITOR
-namespace Editor.SceneSelection {
-    using UnityEditor;
-    using UnityEditor.Overlays;
-    using UnityEditor.SceneManagement;
-    using UnityEditor.Toolbars;
-
+namespace Tools.Editor.SceneSelection
+{
     [Overlay(typeof(SceneView), "Scene Selection")]
     [Icon(Icon)]
-    internal sealed class SceneSelectionOverlay : ToolbarOverlay {
-        const string Icon = "Assets/Editor/Icons/UnityIcon.png";
-        const string AllScenes = "All Scenes";
-        const string BuildScenes = "Build Scenes";
-        const string SceneSearchFilter = "t:scene";
-        const string Additive = "/Additive";
-        const string Single = "/Single";
-        const string Scenes = "Scenes";
-        const string ToolTip = "Select a scene to load";
+    internal sealed class SceneSelectionOverlay : ToolbarOverlay
+    {
+        private const string Icon = "Assets/Editor/Icons/UnityIcon.png";
+        private const string AllScenes = "All Scenes";
+        private const string BuildScenes = "Build Scenes";
+        private const string SceneSearchFilter = "t:scene";
+        private const string Additive = "/Additive";
+        private const string Single = "/Single";
+        private const string Scenes = "Scenes";
+        private const string ToolTip = "Select a scene to load";
 
-        SceneSelectionOverlay() : base(SceneDropdownToggle.ID) { }
+        private SceneSelectionOverlay() : base(SceneDropdownToggle.ID) { }
 
         [EditorToolbarElement(ID, typeof(SceneView))]
-        class SceneDropdownToggle : EditorToolbarDropdownToggle, IAccessContainerWindow {
+        private class SceneDropdownToggle : EditorToolbarDropdownToggle, IAccessContainerWindow
+        {
             public const string ID = "SceneSelectionOverlay/SceneDropdownToggle";
             public EditorWindow containerWindow { get; set; }
-            bool _isBuildScenes;
+            private bool _isBuildScenes;
 
-            SceneDropdownToggle() {
+            private SceneDropdownToggle()
+            {
                 text = Scenes;
                 tooltip = ToolTip;
                 icon = AssetDatabase.LoadAssetAtPath<Texture2D>(Icon);
@@ -39,13 +42,15 @@ namespace Editor.SceneSelection {
                 dropdownClicked += InitializeSceneMenu;
             }
 
-            void InitializeSceneMenu() {
+            private void InitializeSceneMenu()
+            {
                 var menu = new GenericMenu();
 
                 var buttonName = _isBuildScenes ? AllScenes : BuildScenes;
                 menu.AddItem(new GUIContent(buttonName), true, () => _isBuildScenes = !_isBuildScenes);
                 menu.AddSeparator(string.Empty);
-                if (_isBuildScenes) {
+                if (_isBuildScenes)
+                {
                     CreateBuildScenes(menu);
                     return;
                 }
@@ -53,7 +58,8 @@ namespace Editor.SceneSelection {
                 CreateAllScenes(menu);
             }
 
-            void CreateBuildScenes(GenericMenu menu) {
+            private void CreateBuildScenes(GenericMenu menu)
+            {
                 var activeScene = SceneManager.GetActiveScene();
 
                 var buildScenes = EditorBuildSettings.scenes;
@@ -61,7 +67,8 @@ namespace Editor.SceneSelection {
                 CreateScenes(menu, buildScenes.Select(scene => scene.path), activeScene);
             }
 
-            void CreateAllScenes(GenericMenu menu) {
+            private void CreateAllScenes(GenericMenu menu)
+            {
                 var activeScene = SceneManager.GetActiveScene();
 
                 var sceneGuids = AssetDatabase.FindAssets(SceneSearchFilter, null);
@@ -69,17 +76,21 @@ namespace Editor.SceneSelection {
                 CreateScenes(menu, sceneGuids, activeScene);
             }
 
-            void CreateScenes(GenericMenu menu, IEnumerable<string> sceneGuids, Scene activeScene) {
-                foreach (var scene in sceneGuids) {
+            private void CreateScenes(GenericMenu menu, IEnumerable<string> sceneGuids, Scene activeScene)
+            {
+                foreach (var scene in sceneGuids)
+                {
                     var path = AssetDatabase.GUIDToAssetPath(scene);
                     var sceneName = Path.GetFileNameWithoutExtension(path);
 
-                    if (string.CompareOrdinal(activeScene.name, sceneName) == 0) {
+                    if (string.CompareOrdinal(activeScene.name, sceneName) == 0)
+                    {
                         menu.AddDisabledItem(new GUIContent(sceneName));
                         continue;
                     }
 
-                    if (SceneSelectionOverlaySettings.instance.AdditiveOptionEnabled) {
+                    if (SceneSelectionOverlaySettings.instance.AdditiveOptionEnabled)
+                    {
                         menu.AddItem(new GUIContent(sceneName + Single), false,
                             () => OpenScene(activeScene, path, OpenSceneMode.Single));
                         menu.AddItem(new GUIContent(sceneName + Additive), false,
@@ -94,8 +105,10 @@ namespace Editor.SceneSelection {
                 menu.ShowAsContext();
             }
 
-            void OpenScene(Scene activeScene, string path, OpenSceneMode mode) {
-                if (activeScene.isDirty) {
+            private void OpenScene(Scene activeScene, string path, OpenSceneMode mode)
+            {
+                if (activeScene.isDirty)
+                {
                     if (EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo())
                         EditorSceneManager.OpenScene(path, mode);
                     return;

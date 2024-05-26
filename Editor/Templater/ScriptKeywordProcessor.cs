@@ -6,18 +6,21 @@ using UnityEngine;
 
 #if UNITY_EDITOR
 
-namespace Editor.Templater {
-    internal sealed class ScriptKeywordProcessor : AssetModificationProcessor {
-        static readonly char[] Splitters = { '/', '\\', '.' };
-        static readonly List<string> WordsToDelete = new List<string>() { "Extensions", "Scripts", "Editor" };
-        const string NameSpace = "#NAMESPACE#";
-        const string FileExtensions = ".cs";
-        const string Assets = "Assets";
-        const string Dot = ".";
-        const string Meta = ".meta";
-        const string DefaultNameSpace = "Globals";
+namespace Tools.Editor.Template
+{
+    internal sealed class ScriptKeywordProcessor : AssetModificationProcessor
+    {
+        private static readonly char[] Splitters = { '/', '\\', '.' };
+        private static readonly List<string> WordsToDelete = new List<string>() { "Extensions", "Scripts", "Editor" };
+        private const string NameSpace = "#NAMESPACE#";
+        private const string FileExtensions = ".cs";
+        private const string Assets = "Assets";
+        private const string Dot = ".";
+        private const string Meta = ".meta";
+        private const string DefaultNameSpace = "Globals";
 
-        public static void OnWillCreateAsset(string path) {
+        public static void OnWillCreateAsset(string path)
+        {
             path = path.Replace(Meta, string.Empty);
             var index = path.LastIndexOf(Dot, StringComparison.Ordinal);
             if (index < 0)
@@ -32,7 +35,8 @@ namespace Editor.Templater {
             namespaces = namespaces.Except(WordsToDelete).ToList();
 
             var namespaceString = DefaultNameSpace;
-            for (var i = 0; i < namespaces.Count; i++) {
+            for (var i = 0; i < namespaces.Count; i++)
+            {
                 if (i == 0)
                     namespaceString = string.Empty;
                 namespaceString += namespaces[i];

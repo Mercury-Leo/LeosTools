@@ -4,23 +4,26 @@ using UnityEngine;
 
 #if UNITY_EDITOR
 
-namespace Editor.FileUtils {
+namespace Tools.Editor.Folders
+{
     using static AssetDatabase;
 
-    internal static class FolderGenerator {
-        const string DefaultFolder = "Assets";
-        const string MenuItemPath = "Assets/Create/Folders/";
-        const string ToolsMenuPath = "Tools/Setup/Create Base Project";
+    internal static class FolderGenerator
+    {
+        private const string DefaultFolder = "Assets";
+        private const string MenuItemPath = "Assets/Create/Folders/";
+        private const string ToolsMenuPath = "Tools/Setup/Create Base Project";
 
-        const string ScriptsFolder = "Scripts";
-        const string PrefabsFolder = "Prefabs";
-        const string InterfacesFolder = "Abstractions";
-        const string ScriptableFolder = "ScriptableObjects";
-        const string BaseProject = "_Project";
-        static readonly string[] BaseFolders = { "AppUI", "Core", "Game", "Scenes" };
+        private const string ScriptsFolder = "Scripts";
+        private const string PrefabsFolder = "Prefabs";
+        private const string InterfacesFolder = "Abstractions";
+        private const string ScriptableFolder = "ScriptableObjects";
+        private const string BaseProject = "_Project";
+        private static readonly string[] BaseFolders = { "AppUI", "Core", "Game", "Scenes" };
 
         [MenuItem(MenuItemPath + ScriptsFolder + PrefabsFolder, priority = 11)]
-        public static void CreateDefaultFolders() {
+        public static void CreateDefaultFolders()
+        {
             var path = FindClickedAssetPath();
 
             CreateFolder(path, ScriptsFolder);
@@ -28,7 +31,8 @@ namespace Editor.FileUtils {
         }
 
         [MenuItem(MenuItemPath + ScriptsFolder + InterfacesFolder, priority = 11)]
-        public static void CreateInterfacesFolders() {
+        public static void CreateInterfacesFolders()
+        {
             var path = FindClickedAssetPath();
 
             CreateFolder(path, ScriptsFolder);
@@ -36,12 +40,14 @@ namespace Editor.FileUtils {
         }
 
         [MenuItem(MenuItemPath + ScriptableFolder, priority = 11)]
-        public static void CreateScriptableFolders() {
+        public static void CreateScriptableFolders()
+        {
             CreateFolder(FindClickedAssetPath(), ScriptableFolder);
         }
 
         [MenuItem(MenuItemPath + ScriptsFolder + ScriptableFolder, priority = 11)]
-        public static void CreateScriptableScriptsFolders() {
+        public static void CreateScriptableScriptsFolders()
+        {
             var path = FindClickedAssetPath();
 
             CreateFolder(path, ScriptsFolder);
@@ -49,7 +55,8 @@ namespace Editor.FileUtils {
         }
 
         [MenuItem(ToolsMenuPath)]
-        public static void CreateDefaultProject() {
+        public static void CreateDefaultProject()
+        {
             CreateDirectories(BaseProject, BaseFolders);
             Refresh();
         }
@@ -58,7 +65,8 @@ namespace Editor.FileUtils {
         /// Finds the point where the mouse clicked in the assets folder
         /// </summary>
         /// <returns></returns>
-        static string FindClickedAssetPath() {
+        private static string FindClickedAssetPath()
+        {
             var path = GetAssetPath(Selection.activeObject);
 
             if (path.Equals(string.Empty))
@@ -70,7 +78,8 @@ namespace Editor.FileUtils {
             return path;
         }
 
-        static void CreateDirectories(string root, params string[] dir) {
+        private static void CreateDirectories(string root, params string[] dir)
+        {
             var fullPath = Path.Combine(Application.dataPath, root);
             foreach (var newDirectory in dir)
                 Directory.CreateDirectory(Path.Combine(fullPath, newDirectory));

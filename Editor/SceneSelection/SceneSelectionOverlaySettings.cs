@@ -2,15 +2,20 @@ using UnityEditor;
 using UnityEngine;
 
 #if UNITY_EDITOR
-namespace Editor.SceneSelection {
+namespace Tools.Editor.SceneSelection
+{
     using static SceneSelectionConfig;
-    [FilePath(SelectionProjectSettingsPath, FilePathAttribute.Location.ProjectFolder)]
-    internal sealed class SceneSelectionOverlaySettings : ScriptableSingleton<SceneSelectionOverlaySettings> {
-        [SerializeField] bool _additiveOptionEnabled;
 
-        public bool AdditiveOptionEnabled {
+    [FilePath(SelectionProjectSettingsPath, FilePathAttribute.Location.ProjectFolder)]
+    internal sealed class SceneSelectionOverlaySettings : ScriptableSingleton<SceneSelectionOverlaySettings>
+    {
+        [SerializeField] private bool _additiveOptionEnabled;
+
+        public bool AdditiveOptionEnabled
+        {
             get => _additiveOptionEnabled;
-            set {
+            set
+            {
                 _additiveOptionEnabled = value;
                 Save(true);
             }
