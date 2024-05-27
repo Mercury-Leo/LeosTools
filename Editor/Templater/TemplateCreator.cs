@@ -1,6 +1,8 @@
 using System.IO;
+using JetBrains.Annotations;
 using Tools.Editor.Template;
 using UnityEditor;
+using UnityEngine;
 
 namespace Editor.Templater
 {
@@ -8,6 +10,8 @@ namespace Editor.Templater
 
     internal static class TemplateCreator
     {
+        [CanBeNull] private static string _packageDirectory;
+
         [MenuItem(InterfaceItem, priority = 40)]
         public static void CreateInterfaceMenuItem()
         {
@@ -65,16 +69,28 @@ namespace Editor.Templater
 
         private static string GetTemplatePath(string templateName)
         {
+            _packageDirectory ??= FindPackageFolder();
+            if (_packageDirectory == null)
+            {
+                Debug.LogError("Failed to find package directory");
+                return string.Empty;
+            }
+
+            return Path.Combine(_packageDirectory, templateName);
+        }
+
+        [CanBeNull]
+        private static string FindPackageFolder()
+        {
             var scriptGuids = AssetDatabase.FindAssets(Path.GetFileNameWithoutExtension(nameof(TemplateCreator)));
 
             if (scriptGuids.Length == 0)
             {
-                return string.Empty;
+                return null;
             }
 
             var path = AssetDatabase.GUIDToAssetPath(scriptGuids[0]);
-            var directory = Path.GetDirectoryName(path);
-            return Path.Combine(directory, templateName);
+            return Path.GetDirectoryName(path);
         }
     }
 }
