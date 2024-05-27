@@ -4,7 +4,7 @@ using Tools.Editor.Template;
 using UnityEditor;
 using UnityEngine;
 
-namespace Editor.Templater
+namespace Tools.Editor.Templater
 {
     using static TemplateConfig;
 
