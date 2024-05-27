@@ -86,6 +86,7 @@ namespace Tools.Editor.Templater
 
             if (scriptGuids.Length == 0)
             {
+                Debug.LogError("Failed to find package directory");
                 return null;
             }
 
