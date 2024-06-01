@@ -2,8 +2,6 @@ using System.IO;
 using UnityEditor;
 using UnityEngine;
 
-#if UNITY_EDITOR
-
 namespace Tools.Editor.Folders
 {
     using static AssetDatabase;
@@ -19,7 +17,7 @@ namespace Tools.Editor.Folders
         private const string InterfacesFolder = "Abstractions";
         private const string ScriptableFolder = "ScriptableObjects";
         private const string BaseProject = "_Project";
-        private static readonly string[] BaseFolders = { "AppUI", "Core", "Game", "Scenes" };
+        private static readonly string[] DefaultProjectFolders = { "AppUI", "Core", "Game", "Scenes" };
 
         [MenuItem(MenuItemPath + ScriptsFolder + PrefabsFolder, priority = 11)]
         public static void CreateDefaultFolders()
@@ -57,7 +55,7 @@ namespace Tools.Editor.Folders
         [MenuItem(ToolsMenuPath)]
         public static void CreateDefaultProject()
         {
-            CreateDirectories(BaseProject, BaseFolders);
+            CreateDirectories(BaseProject, DefaultProjectFolders);
             Refresh();
         }
 
@@ -86,4 +84,3 @@ namespace Tools.Editor.Folders
         }
     }
 }
-#endif
